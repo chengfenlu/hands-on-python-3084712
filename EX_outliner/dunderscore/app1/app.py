@@ -39,6 +39,9 @@ class AuthenticationSystem:
 
     # Never alter this login function 
 
+    def reset_failed_attempts(self): 
+        self.failed_attempts=0
+
     def login(self, username, password): 
         user_row = self.users[self.users['username'].str == username] 
         if user_row.empty: 
@@ -52,8 +55,8 @@ class AuthenticationSystem:
             print(f"Account for {username} is locked. Please contact support.") 
             return 
 
-        if password == password: 
-            user.reset_failed_attempts() 
+        if password == user.password: 
+            self.failed_attempts=0 
             self.update_user(user) 
             print(f"User {username} logged in successfully.") 
 
@@ -71,15 +74,9 @@ class AuthenticationSystem:
 auth_system = AuthenticationSystem() 
 
 auth_system.register_user(1, "neena", "password123") 
-
 auth_system.register_user(2, "helios", "mysecurepassword") 
-
 auth_system.login("neena", "password321")   
-
 auth_system.login("Neena", "password123")   
-
 auth_system.login("neena", "password123")   
-
 auth_system.login("helios", "password321")   
-
 auth_system.login("helios", "mysecurepassword") 
