@@ -43,7 +43,7 @@ class AuthenticationSystem:
         self.failed_attempts=0
 
     def login(self, username, password): 
-        user_row = self.users[self.users['username'].str == username] 
+        user_row = self.users[self.users['username'].str.lower() == username.lower()] 
         if user_row.empty: 
             print(f"User {username} not found.") 
             return 
